@@ -1,17 +1,16 @@
 package com.micro.web
 
-import io.micronaut.http.client.HttpClient
+import com.micro.web.broker.model.Quote
+import io.micronaut.http.HttpRequest
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.EmbeddedApplication
-import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.rxjava3.http.client.Rx3HttpClient
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
-import static org.assertj.core.api.Assertions.*
 import spock.lang.Specification
 
 @MicronautTest
-class MarketsControllerSpec extends Specification {
+class QuotesControllerSpec extends Specification {
     @Inject
     EmbeddedApplication application
 
@@ -24,12 +23,10 @@ class MarketsControllerSpec extends Specification {
     @Inject
     @Client("/") Rx3HttpClient client
 
-    void "returnsListOfMarkets"(){
+    void "returnQuotePerSymbol"(){
         when:
-        final List result = client.toBlocking().retrieve("/markets", List.class)
+        Quote appleResult = client.toBlocking().retrieve(HttpRequest.GET("/quotes/APPL"), Quote.class)
         then:
-        result.size() == 7
-//        assertThat(result).containsExactlyInAnyOrder("AAPL", "AMZN", "FB", "GOOG", "MSFT", "NFLX", "TSLA")
-        result.collect{it.get("value")}.containsAll("AAPL", "AMZN", "FB", "GOOG", "MSFT", "NFLX", "TSLA")
+        appleResult
     }
 }
