@@ -1,0 +1,12 @@
+micronaut:
+  server:
+    port: 8082
+hello:
+  controller:
+    path: "/hello"
+  service:
+    greeting: "what up hommie?"
+  config:
+    greeting:
+      de: "german"
+      en: "english"

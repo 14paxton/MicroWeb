@@ -45,12 +45,11 @@ class QuotesControllerSpec extends Specification {
         "NOT_FOUND" == error.error
         "quote for symbol not available" == error.message
         "/quote/EXCEPTION" == error.path
-
     }
 
     void "returnQuotePerSymbol"(){
         when:
-        Quote appleResult = client.toBlocking().retrieve(HttpRequest.GET("/quotes/APPL"), Quote.class)
+        Quote appleResult = client.toBlocking().retrieve(HttpRequest.GET("/quotes/AAPL"), Quote.class)
         then:
         appleResult
     }
